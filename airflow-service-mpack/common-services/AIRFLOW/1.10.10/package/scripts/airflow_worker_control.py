@@ -21,7 +21,7 @@ class AirflowWorker(Script):
 		# -------------------------------------------------------------
 		Execute(format("export SLUGIFY_USES_TEXT_UNIDECODE=yes && {airflow_home}/airflow_env/bin/pip install --upgrade {airflow_pip_params} apache-airflow[all]==1.10.10 --constraint https://raw.githubusercontent.com/apache/airflow/1.10.10/requirements/requirements-python3.6.txt"))
 		Execute(format("export SLUGIFY_USES_TEXT_UNIDECODE=yes && {airflow_home}/airflow_env/bin/pip install --upgrade {airflow_pip_params} apache-airflow[celery]==1.10.10 --constraint https://raw.githubusercontent.com/apache/airflow/1.10.10/requirements/requirements-python3.6.txt"))
-		Execute(format("chmod 755 /bin/airflow /usr/bin/airflow"))
+		Execute(format("chmod 755 {airflow_home}/airflow_env/bin/airflow"))
 		Execute(format("useradd {airflow_user}"), ignore_failures=True)
 		Execute(format("mkdir -p {airflow_home}"))
 		airflow_make_startup_script(env)
