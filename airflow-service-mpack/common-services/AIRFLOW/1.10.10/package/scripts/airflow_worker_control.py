@@ -14,19 +14,13 @@ class AirflowWorker(Script):
 		self.install_packages(env)
 		Logger.info(format("Installing Airflow Service"))
 		# virtualevn setting ------------------------------------------
-		Execute(format("python /datalabnas/get-pip.py"))
-		Execute(format("pip install --upgrade configparser"))
-		Execute(format("pip install virtualenv"))
-		Execute(format("virtualenv {airflow_home}/airflow_env"))
+		Execute(format("python3 /datalabnas/hadoop3/get-pip.py"))
+		Execute(format("pip3 install --upgrade configparser"))
+		Execute(format("pip3 install virtualenv"))
+		Execute(format("virtualenv {airflow_home}/airflow_env --python=python3"))
 		# -------------------------------------------------------------
-		Execute(format("{airflow_home}/airflow_env/bin/pip install --upgrade {airflow_pip_params} pip"))
-		Execute(format("{airflow_home}/airflow_env/bin/pip install --upgrade {airflow_pip_params} setuptools"))
-		Execute(format("{airflow_home}/airflow_env/bin/pip install --upgrade {airflow_pip_params} docutils pytest-runner Cython==0.28"))
-		# package version issue ---------------------------------------
-		Execute(format("{airflow_home}/airflow_env/bin/pip install --upgrade {airflow_pip_params} JPype1==0.7.1 marshmallow-sqlalchemy==0.17.1"))
-		# -------------------------------------------------------------
-		Execute(format("export SLUGIFY_USES_TEXT_UNIDECODE=yes && {airflow_home}/airflow_env/bin/pip install --upgrade {airflow_pip_params} apache-airflow[all]==1.10.0"))
-		Execute(format("export SLUGIFY_USES_TEXT_UNIDECODE=yes && {airflow_home}/airflow_env/bin/pip install --upgrade {airflow_pip_params} apache-airflow[celery]==1.10.0"))
+		Execute(format("export SLUGIFY_USES_TEXT_UNIDECODE=yes && {airflow_home}/airflow_env/bin/pip install --upgrade {airflow_pip_params} apache-airflow[all]==1.10.10 --constraint https://raw.githubusercontent.com/apache/airflow/1.10.10/requirements/requirements-python3.6.txt"))
+		Execute(format("export SLUGIFY_USES_TEXT_UNIDECODE=yes && {airflow_home}/airflow_env/bin/pip install --upgrade {airflow_pip_params} apache-airflow[celery]==1.10.10 --constraint https://raw.githubusercontent.com/apache/airflow/1.10.10/requirements/requirements-python3.6.txt"))
 		Execute(format("chmod 755 /bin/airflow /usr/bin/airflow"))
 		Execute(format("useradd {airflow_user}"), ignore_failures=True)
 		Execute(format("mkdir -p {airflow_home}"))
