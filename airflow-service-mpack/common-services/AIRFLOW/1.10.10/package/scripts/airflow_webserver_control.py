@@ -26,7 +26,7 @@ class AirflowWebserver(Script):
 		Execute(format("mkdir -p {airflow_home}"))
 		airflow_make_startup_script(env)
 		Execute(format("chown -R {airflow_user}:{airflow_group} {airflow_home}"))
-		Execute(format("export AIRFLOW_HOME={airflow_home} && airflow initdb"),
+		Execute(format("export AIRFLOW_HOME={airflow_home} && {airflow_home}/airflow_env/bin/airflow initdb"),
 			user=params.airflow_user
 		)
 
