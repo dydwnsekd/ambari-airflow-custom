@@ -4,7 +4,7 @@
 [![License](http://img.shields.io/:license-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 Mpack allows you to install/configure airflow directly from ambari.
-Apache Airflow version included: 1.10.0
+Apache Airflow version included: 1.10.10
 
 #### Installing Apache Aiflow Mpack:
 1. Stop Ambari server.
