@@ -6,6 +6,13 @@
 Mpack allows you to install/configure airflow directly from ambari.
 Apache Airflow version included: 1.10.10
 
+airflow 의존성 package 함께 설치
+requirements-python[version].txt로 설치 진행
+```
+# airflow-service-mpack/common-services/AIRFLOW/1.10.10/package/scripts/airflow_scheduler_control.py airflow_webserver_control.py airflow_worker_control.py
+pip install apache-airflow[all]==1.10.10 --constraint https://raw.githubusercontent.com/apache/airflow/1.10.10/requirements/requirements-python3.7.txt
+```
+
 #### Installing Apache Aiflow Mpack:
 1. Stop Ambari server.
 2. Install the Apache Airflow Mpack on Ambari server.
@@ -13,6 +20,7 @@ Apache Airflow version included: 1.10.10
 
 ```
 ambari-server stop
+tar -zxcf airflow-service-mpack.tar.gz airflow-service-mpack
 ambari-server install-mpack --mpack=airflow-service-mpack.tar.gz
 ambari-server start
 ```
@@ -46,7 +54,14 @@ ambari-server start
 ![Deploy](https://github.com/miho120/ambari-airflow-mpack/blob/master/Screenshots/10.PNG)
 
 ### Virtual environment support
-If you want to run apache airflow in virtual environment, you should modify startup script "AIRFLOW_HOME/airflow_control.sh".
+"AIRFLOW_HOME/airflow_control.sh".
+해당 프로젝트는 virtualenv에서 동작하는 것을 기본으로 동작하며, airflow_control.sh의 내용을 수정하려면 
+airflow-service-mpack/common-services/AIRFLOW/1.10.10/package/scripts/airflow_setup.py
+```
+# 125line
+export AIRFLOW_HOME={airflow_home}/ && source {airflow_home}/airflow_env/bin/activate && {airflow_home}/airflow_env/bin/airflow $1 --pid {airflow_home}/airflow-sys-$1.pid
+```
+수정
 
 Example:
 ```
